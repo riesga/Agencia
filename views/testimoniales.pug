@@ -3,7 +3,9 @@ extends ./layout/index
 block container
   main.container.mt-5
     h1.text-center.mt-5 #{pagina}
-    .row
+    include ./layout/bloque_testimoniales
+
+    .row             
       h2.d-block.w-100.text-center Agrega un testimonial
       .row.justify-content-center.col
         .col-md-8

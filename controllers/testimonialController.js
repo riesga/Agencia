@@ -1,6 +1,7 @@
-import { Viaje } from "../models/Viaje.js";
 
-const guardarTestimonial = (req, res) =>{
+import { Testimoniales } from "../models/testimoniales.js";
+
+const guardarTestimonial = async (req, res) =>{
 
   const { nombre, correo, mensaje } = req.body;
 
@@ -20,14 +21,30 @@ const guardarTestimonial = (req, res) =>{
   
   if(errores.length > 0) {
     res.render('testimoniales', {
-      pagina: 'Testimoniales',
+      pagina: 'Testimonios',
       errores,
       nombre,
       correo,
-      mensaje
+      mensaje      
     })
   } else {
-    
+    try {
+      await Testimoniales.create({
+        nombre,
+        correo,
+        mensaje,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+      const testimoniales = await Testimoniales.findAll();
+      res.render('testimoniales', {
+        pagina: 'Testimonios',
+        errores,
+        testimoniales
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
